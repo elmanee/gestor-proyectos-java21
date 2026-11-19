@@ -6,7 +6,7 @@ public class Asignaciones {
 	private Integer id_usuario;
 	private Integer id_tarea;
 	private String fecha_asignacion;
-	
+
 	public Asignaciones() {
 		super();
 	}

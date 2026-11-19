@@ -1,0 +1,11 @@
+target/
+.idea/
+*.iml
+.env
+.env.*
+!.env.example
+.secrets/
+tmp/
+application-local.properties
+ci-reports/
+/trivy-*.json

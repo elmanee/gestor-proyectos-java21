@@ -9,7 +9,7 @@ public class Proyectos {
 	private String fecha_finalizacion;
 	private String estado_proyecto;
 	private String fondo;
-	
+
 	public Proyectos() {
 		super();
 	}

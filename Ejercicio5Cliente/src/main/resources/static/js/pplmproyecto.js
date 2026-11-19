@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
             var formRegistro = document.getElementById('form-registro');
 
-            formRegistro.addEventListener('submit', function(event) {
+            formRegistro?.addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevenir el envío del formulario para validar primero
 
                 var nombre = document.getElementById('nombre').value;

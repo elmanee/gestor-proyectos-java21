@@ -156,11 +156,11 @@
     <div class="overlay" id="overlay-contacto">
         <div class="popup" id="popup-contacto">
             <h2>Dudas y sugerencias</h2>
-            <p>Comunícate a los siguientes correos electrónicos: <br>
-               perla22522@cbtis75.edu.mx <br>
-               liliana22512@cbtis75.edu.mx <br>
-               marissa22517@cbtis75.edu.mx <br>
-               ana22533@cbtis75.edu.mx <br>
+            <p>Contactos de demostración del proyecto: <br>
+               contacto1@example.test <br>
+               contacto2@example.test <br>
+               contacto3@example.test <br>
+               contacto4@example.test <br>
             </p>
             <button onclick="closePopup('overlay-contacto')">Cerrar</button>
         </div>
@@ -224,7 +224,7 @@
             openPopup('overlay-contacto'); 
         });
         var registroLink = document.querySelector('#registro');
-        registroLink.addEventListener('click', function(event) {
+        registroLink?.addEventListener('click', function(event) {
             event.preventDefault();
             openPopup('overlay-registro');
         });
@@ -233,7 +233,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         var formRegistro = document.getElementById('form-registro');
 
-        formRegistro.addEventListener('submit', function(event) {
+        formRegistro?.addEventListener('submit', function(event) {
             event.preventDefault(); 
 
             var nombre = document.getElementById('nombre').value;

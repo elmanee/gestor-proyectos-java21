@@ -82,8 +82,8 @@
 		<!--Usuario-->
 			<hr>
 			<div class="row d-flex">
-				<label id="Nombre" class="mt-0s d-flex justify-content-start">Perla Joceline Martínez Meza</label>
-				<label id="Email" class="mb-3 mt-1s d-flex justify-content-start">perla22522@cbtis75.edu.mx</label>
+				<label id="Nombre" class="mt-0s d-flex justify-content-start">Usuario de demostración</label>
+				<label id="Email" class="mb-3 mt-1s d-flex justify-content-start">contacto1@example.test</label>
 				<div id="imagenUsuario" class="me-2 mt-2 mb-3 rounded-circle d-flex justify-content-end"><p class="fw-bolder fs-1 text-uppercase"><strong class="" id="inicial"></strong></p></div>
 			</div>
 	  </div> 
@@ -100,13 +100,6 @@
 			       Tareas pendientes
 			</div>
 			<div id="tareasPendientes">
-				<ul class="my-2">
-					<li>
-					    <div class="my-2 badge text-bg-light-subtle d-grid gap-2">
-							<button type="button" class="btn btn-light text-start" data-bs-toggle="modal" data-bs-target="#editarTarea">Realizar infografia</button>
-						</div>
-					</li>
-				</ul>
 			</div>
 			<div class="mb-3 mt-0">
 			<form >
@@ -127,13 +120,6 @@
 			    En curso
 			</div>
 			<div id="enCurso">
-				<ul class="my-2">
-					<li>
-					    <div class="my-2 badge text-bg-light-subtle d-grid gap-2">
-							<button type="button" class="btn btn-light text-start">Hacer canva</button>
-						</div>
-					</li>
-				</ul>
 			</div>
 			<div class="mb-3 mt-0">
 			<form>
@@ -153,13 +139,6 @@
 			    Trabajos terminados
 			</div>
 			<div id="trabajoTerminado">
-				<ul class="my-2">
-					<li>
-					    <div class="my-2 badge text-bg-light-subtle d-grid gap-2">
-							<button type="button" class="btn btn-light text-start">Hacer investigacion</button>
-						</div>
-					</li>
-				</ul>
 			</div>
 			<div class="mb-3 mt-0">
 			<form>
@@ -274,7 +253,7 @@
 								  </div>
 								  
 								  <span class="input-group-text">
-									  <button class="border border-0 bg-light" th:onclick="guardarComentario()" >
+									  <button type="button" aria-label="Guardar comentario" class="border border-0 bg-light" th:onclick="guardarComentario()" >
 										  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
 											  <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
 										  </svg>
@@ -318,8 +297,7 @@
 									  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
 									  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
 									</svg> Fechas
-									<input th:field="*{fecha_vencimiento}" type="date" id="inputFechas">
-								</button>
+									</button><input th:field="*{fecha_vencimiento}" type="date" id="inputFechas">
 								
 								<p class="mt-4"><strong>Acciones</strong></p>
 								<select th:field="*{lista}" id="cambiarLista">

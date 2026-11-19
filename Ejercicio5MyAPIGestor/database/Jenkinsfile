@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    tools { jdk 'JDK21'; maven 'Maven3.9.11' }
+    options { timestamps(); disableConcurrentBuilds(); timeout(time: 30, unit: 'MINUTES') }
+    environment {
+        SONAR_HOST_URL = 'http://host.docker.internal:9000'
+        DB_CI_URL = 'jdbc:mariadb://host.docker.internal:13307/gestor_ci'
+    }
+    stages {
+        stage('Checkout') { steps { checkout scm } }
+        stage('Java 21 y Maven') { steps { sh 'java -version; mvn -version' } }
+        stage('Pruebas y cobertura') { steps { dir('Ejercicio5MyAPIGestor') { withCredentials([usernamePassword(credentialsId: 'gestor-db-ci', usernameVariable: 'DB_CI_USER', passwordVariable: 'DB_CI_PASSWORD')]) { sh 'mvn -B -ntp clean verify -Pdatabase-ci' } } } }
+        stage('Vulnerabilidades sin target') { steps { dir('Ejercicio5MyAPIGestor') { sh '/var/jenkins_home/tools/trivy/trivy fs --quiet --scanners vuln,secret,misconfig --skip-dirs target,.git,.idea,entrega,evidencias,tmp,.secrets --format json --output trivy-database.json .'; sh '/var/jenkins_home/tools/trivy/trivy sbom --quiet --format json --output trivy-dependencies.json ci-reports/bom.json' } } }
+        stage('SonarQube') { steps { dir('Ejercicio5MyAPIGestor') {
+            withCredentials([string(credentialsId: 'gestor-sonar-token', variable: 'SONAR_TOKEN')]) {
+                sh 'mvn -B -ntp sonar:sonar -Dsonar.nodejs.executable=/var/jenkins_home/tools/node/bin/node -Dsonar.projectKey=gestor-database -Dsonar.projectName=Gestor-database -Dsonar.qualitygate.wait=true -Dsonar.sources=database,src/main/java/com/mx/cbtis/gestor/repository,src/main/java/com/mx/cbtis/gestor/persistence'
+            }
+        } } }
+    }
+    post { always {
+        junit testResults: 'Ejercicio5MyAPIGestor/target/surefire-reports/*.xml', allowEmptyResults: true
+        archiveArtifacts artifacts: 'Ejercicio5MyAPIGestor/target/site/jacoco/**,Ejercicio5MyAPIGestor/ci-reports/bom.json,Ejercicio5MyAPIGestor/trivy-*.json,Ejercicio5MyAPIGestor/target/failsafe-reports/*', allowEmptyArchive: true
+    } }
+}

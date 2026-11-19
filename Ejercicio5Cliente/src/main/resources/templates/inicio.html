@@ -58,7 +58,7 @@
 
                                 <p class="nombres">Estado del proyecto</p>
                                 <select th:field="*{estado_proyecto}" class="inputs" id="estado_proyecto" required>
-                                    <option value="0">Seleccione una opci&oacute;n</option> 
+                                    <option value="">Seleccione una opci&oacute;n</option> 
                                     <option value="En proceso">En proceso</option>
                                     <option value="Finalizado">Finalizado</option>
                                 </select>
@@ -81,7 +81,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalEditar">Editar</h1>
+                                <h1 class="modal-title fs-5" id="modalEditarLabel">Editar</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -101,7 +101,7 @@
 
                                 <p class="nombres">Estado del proyecto</p>
                                 <select th:field="*{estado_proyecto}" class="inputs" id="editar_estado_proyecto" required>
-                                    <option value="0">Seleccione una opci&oacute;n</option> 
+                                    <option value="">Seleccione una opci&oacute;n</option> 
                                     <option value="En proceso">En proceso</option>
                                     <option value="Finalizado">Finalizado</option>
                                 </select>
@@ -149,20 +149,20 @@
                 </div>
                 <div>
                     <img th:src="@{Images/lima.png}" alt="Color lima" width="50px" height="30px" onclick="guardarRutaImagen('/Images/lima.png');" class="rounded popover-image" id="imagenes">                    
-                    <img th:src="@{Images/azulCobalto.png}" alt="Color cobalto" width="50px" height="30px" onclick="guardarRutaImagen('/Images/azulCobalto');" class="rounded popover-image" id="imagenes">
-                    <img th:src="@{Images/azulReal.png}" alt="Color azul" width="50px" height="30px" onclick="guardarRutaImagen('/Images/azulReal');" class="rounded popover-image" id="imagenes">
-                    <img th:src="@{Images/azulTurquesa.png}" alt="Color turquesa" width="50px" height="30px" onclick="guardarRutaImagen('/Images/azulTurquesa');" class="rounded popover-image" id="imagenes">
+                    <img th:src="@{Images/azulCobalto.png}" alt="Color cobalto" width="50px" height="30px" onclick="guardarRutaImagen('/Images/azulCobalto.png');" class="rounded popover-image" id="imagenes">
+                    <img th:src="@{Images/azulReal.png}" alt="Color azul" width="50px" height="30px" onclick="guardarRutaImagen('/Images/azulReal.png');" class="rounded popover-image" id="imagenes">
+                    <img th:src="@{Images/azulTurquesa.png}" alt="Color turquesa" width="50px" height="30px" onclick="guardarRutaImagen('/Images/azulTurquesa.png');" class="rounded popover-image" id="imagenes">
                 </div>
                 <div>
                     <img th:src="@{Images/magenta.png}" alt="Color magneta" width="50px" height="30px" onclick="guardarRutaImagen('/Images/magenta.png');" class="rounded popover-image" id="imagenes">
-                    <img th:src="@{Images/morado.png}" alt="Color morado" width="50px" height="30px" onclick="guardarRutaImagen('/Images/morado');" class="rounded popover-image" id="imagenes">
-                    <img th:src="@{Images/naranja.png}" alt="Color naranja" width="50px" height="30px" onclick="guardarRutaImagen('/Images/naranja');" class="rounded popover-image" id="imagenes">
-				    <img th:src="@{Images/negro.png}" alt="Color negro" width="50px" height="30px" onclick="guardarRutaImagen('/Images/negro');" class="rounded popover-image" id="imagenes">
+                    <img th:src="@{Images/morado.png}" alt="Color morado" width="50px" height="30px" onclick="guardarRutaImagen('/Images/morado.png');" class="rounded popover-image" id="imagenes">
+                    <img th:src="@{Images/naranja.png}" alt="Color naranja" width="50px" height="30px" onclick="guardarRutaImagen('/Images/naranja.png');" class="rounded popover-image" id="imagenes">
+				    <img th:src="@{Images/negro.png}" alt="Color negro" width="50px" height="30px" onclick="guardarRutaImagen('/Images/negro.png');" class="rounded popover-image" id="imagenes">
 				</div>
 				<div>
-				    <img th:src="@{Images/rojoBrillante.png}" alt=" Color rojo" width="50px" height="30px" onclick="guardarRutaImagen('/Images/rojoBrillante');" class="rounded popover-image" id="imagenes">
-				    <img th:src="@{Images/rosa.png}" alt="Color rosa" width="50px" height="30px" onclick="guardarRutaImagen('/Images/rosa');" class="rounded popover-image" id="imagenes">
-				    <img th:src="@{Images/turquesaOscuro.png}" alt=" Color turquesaOscuro" width="50px" height="30px" onclick="guardarRutaImagen('/Images/turquesaOscuro');" class="rounded popover-image" id="imagenes">
+				    <img th:src="@{Images/rojoBrillante.png}" alt=" Color rojo" width="50px" height="30px" onclick="guardarRutaImagen('/Images/rojoBrillante.png');" class="rounded popover-image" id="imagenes">
+				    <img th:src="@{Images/rosa.png}" alt="Color rosa" width="50px" height="30px" onclick="guardarRutaImagen('/Images/rosa.png');" class="rounded popover-image" id="imagenes">
+				    <img th:src="@{Images/turquesaOscuro.png}" alt=" Color turquesaOscuro" width="50px" height="30px" onclick="guardarRutaImagen('/Images/turquesaOscuro.png');" class="rounded popover-image" id="imagenes">
 				</div>
                 <div><p id='fondosTitulos'>Degradado</p></div>
                 <div class='d-flex flex-wrap align-content-between'>

@@ -1,13 +1,13 @@
 package com.mx.cbtis.modelo;
 
 public class Comentarios {
-	
+
 	private Integer id_comentario;
 	private String id_usuario;
 	private Integer id_tarea;
 	private String texto_comentario;
 	private String fecha_hora;
-	
+
 	public Comentarios() {
 		super();
 	}

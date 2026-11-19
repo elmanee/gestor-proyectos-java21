@@ -17,68 +17,68 @@ import com.mx.cbtis.gestor.repository.ComentariosRepository;
 
 @RestController
 public class ComentariosController {
-	
+
 	@Autowired
 	ComentariosRepository comentariostable;
-	
+
 	@PostMapping("/getComentario")
 
 	public List<Comentarios> getComentario(@RequestBody Comentarios idComentario){
 		List<Comentarios> listaComentarios = comentariostable.findByTarea(idComentario.getId_tarea());
 		return listaComentarios;
 	}
-	
+
 	@GetMapping("/buscarComentario")
 	public Comentarios getComentario(@RequestParam int id) {
-		
+
 		Comentarios buscar = new Comentarios();
 		Optional<Comentarios> comentario = comentariostable.findById(id);
 		if(comentario.isPresent()) {
 			buscar = comentario.get();
 		}
-		
+
 		return buscar;
 	}
-	
+
 	@PostMapping("/addComentario")
 	public int addComentario(@RequestBody Comentarios comentario) {
-		
+
 		int flag = 0;
-		if(!comentario.equals(null)) {
+		if(comentario != null) {
 			comentariostable.save(comentario);
 			flag = 1;
 		}
-		
+
 		return flag;
 	}
-	
+
 	@PostMapping("/updateComentario")
 	public int updateComentario(@RequestBody Comentarios comentario) {
-		
+
 		int flag = 0;
-		if(!comentario.equals(null)) {
+		if(comentario != null) {
 			comentariostable.save(comentario);
 			flag = 1;
 		}
-		
+
 		return flag;
 	}
-	
+
 	@DeleteMapping("/deleteComentario")
 	public int deleteComentario(@RequestBody Comentarios comentario) {
-		
+
 		int flag = 0;
-		if(!comentario.equals(null)) {
+		if(comentario != null) {
 			comentariostable.delete(comentario);
 			flag = 1;
 		}
-		
+
 		return flag;
 	}
-	
+
 	@PostMapping("/buscarComentarios")
 	public List<Comentarios> getComentarios(){
-		
+
 		List<Comentarios> listaComentarios = new ArrayList<>();
 		comentariostable.findAll().forEach(listaComentarios :: add);
 		return listaComentarios;

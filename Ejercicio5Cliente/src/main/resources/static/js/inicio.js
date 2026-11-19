@@ -1,3 +1,6 @@
+function escapeHtml(value) {
+    return $('<div>').text(value == null ? '' : String(value)).html();
+}
 $(document).ready(function(){
 	
 	$.ajax({
@@ -11,10 +14,11 @@ $(document).ready(function(){
 
           // Crear tarjetas para cada proyecto
           data.forEach(function(proyecto) {
+            proyecto = {...proyecto, nombre: escapeHtml(proyecto.nombre), descripcion: escapeHtml(proyecto.descripcion), fecha_inicio: escapeHtml(proyecto.fecha_inicio), fecha_finalizacion: escapeHtml(proyecto.fecha_finalizacion), estado_proyecto: escapeHtml(proyecto.estado_proyecto)};
             var tarjeta = `
               <div class="col-md-4">
                 <div class="card mb-4">
-                  <img src="${proyecto.fondo}" alt="...">
+                  <img src="${/^\/Images\/[A-Za-z0-9]+\.(png|gif|jpg)$/.test(proyecto.fondo) ? proyecto.fondo : '/Images/blanco.png'}" alt="...">
                   <div class="card-body">
                     <div class="dropdown">
                       <div class="d-flex justify-content-end">
@@ -31,7 +35,7 @@ $(document).ready(function(){
                                 </svg>
                                 Editar
                               </a></li>
-                              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalAlerta" onclick="obtenerInfo(${proyecto.id_proyecto}, 'hiddenId', '${proyecto.nombre}')">
+                              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalAlerta" data-nombre="${proyecto.nombre}" onclick="obtenerInfo(${proyecto.id_proyecto}, 'hiddenId', this.dataset.nombre)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6d7578" class="bi bi-trash3-fill me-3 mb-2" viewBox="0 0 16 16">
                                   <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
                                 </svg>
@@ -126,9 +130,9 @@ function asignarFondo(){
 }
 
 function asignarFondoEditar(){
-	console.log(document.getElementById("editarFondo").value);
-	if(document.getElementById("editarFondo").value == ""){
-		document.getElementById("editarFondo").value = "/Images/blanco.png";
+	console.log(document.getElementById("editar_fondo").value);
+	if(document.getElementById("editar_fondo").value == ""){
+		document.getElementById("editar_fondo").value = "/Images/blanco.png";
 	}
 }
 

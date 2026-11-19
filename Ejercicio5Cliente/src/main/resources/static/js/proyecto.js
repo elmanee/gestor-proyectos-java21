@@ -1,3 +1,6 @@
+function escapeHtml(value) {
+    return $('<div>').text(value == null ? '' : String(value)).html();
+}
 $(document).ready(function() {
 	
 	//Seleccionar estado
@@ -6,12 +9,13 @@ $(document).ready(function() {
 	
 	var usuarioString = localStorage.getItem("usuario");
 	var usuario = JSON.parse(usuarioString);
+	if (!usuario) { window.location.replace("/login"); return; }
 	var imagen = document.getElementById("imagenUsuario");
 	imagen.style.backgroundColor = usuario.imagen_usuario;
 	var inicial = usuario.nombre[0];
-	document.getElementById("Nombre").innerHTML = usuario.nombre;
-	document.getElementById("Email").innerHTML = usuario.correo_electronico;
-	document.getElementById("inicial").innerHTML = inicial;
+	document.getElementById("Nombre").textContent = usuario.nombre;
+	document.getElementById("Email").textContent = usuario.correo_electronico;
+	document.getElementById("inicial").textContent = inicial;
 	
 	var urlParams = new URLSearchParams(window.location.search);
 	var id = urlParams.get('id_proyecto');
@@ -32,7 +36,7 @@ $(document).ready(function() {
 	            
 	             data.forEach(function(usuario) {
 					var miembro = `
-		            <p>${usuario.nombre}</p>
+		            <p>${escapeHtml(usuario.nombre)}</p>
 	            	`;
 	             contenedor.append(miembro);})
 	       }
@@ -65,13 +69,14 @@ $(document).ready(function() {
             // Crear tarjetas para cada proyecto
 
           data.forEach(function(tarea) {
+            tarea = {...tarea, nombre: escapeHtml(tarea.nombre)};
 			if(tarea.lista == "pendientes"){
 				var tarjeta = `
 	            <ul class="my-2">
 	              <li>
 					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
 						<button type="button" class="btn btn-light text-start d-grid gap-2 border border-${tarea.estado}" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
-						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', '${tarea.nombre}')" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" data-nombre="${tarea.nombre}" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', this.dataset.nombre)" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
 						  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
 						  </svg>
 						</button>
@@ -101,9 +106,9 @@ $(document).ready(function() {
 								var comentario = `
 								<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
 								    <strong class="me-auto">Liliana Gómez Martínez</strong>
-								    <small class="text-body-secondary">${comentarios.fecha_hora}</small>
+								    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
 								  <div>
-								    ${comentarios.texto_comentario}
+								    ${escapeHtml(comentarios.texto_comentario)}
 								  </div>
 							    </div>
 								`
@@ -119,7 +124,7 @@ $(document).ready(function() {
 	              <li>
 					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
 						<button type="button" class="btn btn-light text-start d-grid gap-2 border border-${tarea.estado}" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
-						<button onclick="eliminarTarea(${tarea.id_tarea});" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" data-nombre="${tarea.nombre}" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', this.dataset.nombre)" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
 						  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
 						  </svg>
 						</button>
@@ -147,9 +152,9 @@ $(document).ready(function() {
 								var comentario = `
 								<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
 								    <strong class="me-auto">Liliana Gómez Martínez</strong>
-								    <small class="text-body-secondary">${comentarios.fecha_hora}</small>
+								    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
 								  <div>
-								    ${comentarios.texto_comentario}
+								    ${escapeHtml(comentarios.texto_comentario)}
 								  </div>
 							    </div>
 								`
@@ -164,7 +169,7 @@ $(document).ready(function() {
 	              <li>
 					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
 						<button type="button" class="btn btn-light text-start d-grid gap-2 border border-${tarea.estado}" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
-						<button onclick="eliminarTarea(${tarea.id_tarea});" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" data-nombre="${tarea.nombre}" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', this.dataset.nombre)" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
 						  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
 						  </svg>
 						</button>
@@ -192,9 +197,9 @@ $(document).ready(function() {
 								var comentario = `
 								<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
 								    <strong class="me-auto">Liliana Gómez Martínez</strong>
-								    <small class="text-body-secondary">${comentarios.fecha_hora}</small>
+								    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
 								  <div>
-								    ${comentarios.texto_comentario}
+								    ${escapeHtml(comentarios.texto_comentario)}
 								  </div>
 							    </div>
 								`
@@ -284,6 +289,7 @@ function Fechas(){
 }
 
 function validarTarea(){
+    if (!$("#inputTarea").val().trim()) { $("#inputTarea").get(0).focus(); return; }
 	
 	var urlParams = new URLSearchParams(window.location.search);
 	var id = urlParams.get('id_proyecto');
@@ -304,6 +310,7 @@ function validarTarea(){
 }
 
 function validarTarea2(){
+    if (!$("#inputTarea2").val().trim()) { $("#inputTarea2").get(0).focus(); return; }
 	
 	var urlParams = new URLSearchParams(window.location.search);
 	var id = urlParams.get('id_proyecto');
@@ -323,6 +330,7 @@ function validarTarea2(){
 	})
 }
 function validarTarea3(){
+    if (!$("#inputTarea3").val().trim()) { $("#inputTarea3").get(0).focus(); return; }
 	
 	var urlParams = new URLSearchParams(window.location.search);
 	var id = urlParams.get('id_proyecto');
@@ -416,14 +424,15 @@ function verificarComentario(){
 }*/
 
 function guardarComentario(){
-	var comentario = $('#comentarioT').val();
+	var comentario = $('#comentarioT').val().trim();
+    if (!comentario) { $('#comentarioT').get(0).focus(); return; }
 	let now = new Date();
 	let day = ('0' + now.getDate()).slice(-2);        // Día del mes (dos dígitos)
 	let month = ('0' + (now.getMonth() + 1)).slice(-2); // Mes (dos dígitos)
-	let year = now.getFullYear().toString().slice(-2); // Año (dos últimos dígitos)
+	let year = now.getFullYear().toString(); // Año (dos últimos dígitos)
 	let hour = ('0' + now.getHours()).slice(-2);       // Hora (dos dígitos)
 	let minute = ('0' + now.getMinutes()).slice(-2);   // Minutos (dos dígitos)
-	let fecha = `${year}/${month}/${day} ${hour}:${minute}`;
+	let fecha = `${year}-${month}-${day} ${hour}:${minute}:00`;
 	
 	var usuarioString = localStorage.getItem("usuario");
 	var usuario = JSON.parse(usuarioString);
@@ -467,10 +476,10 @@ function llenarBarraLateral(idProyecto){
 			console.log(data);
 			
 			var nombre = document.getElementById("offcanvasScrollingLabel");
-			nombre.innerHTML = data.nombre;
+			nombre.textContent = data.nombre;
 			
 			var descripcion = document.getElementById("despliegueDescripcion");
-			descripcion.innerHTML = data.descripcion;
+			descripcion.textContent = data.descripcion;
 		
 		},
 		
@@ -495,10 +504,10 @@ function comentarios(idTarea){
 	        data.forEach(function(comentarios) {
 					var comentario = `
 					<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
-					    <strong class="me-auto">${comentarios.id_usuario}</strong>
-					    <small class="text-body-secondary">${comentarios.fecha_hora}</small>
+					    <strong class="me-auto">${escapeHtml(comentarios.id_usuario)}</strong>
+					    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
 					  <div>
-					    ${comentarios.texto_comentario}
+					    ${escapeHtml(comentarios.texto_comentario)}
 					  </div>
 				    </div>
 					`

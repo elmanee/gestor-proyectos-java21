@@ -1,23 +1,25 @@
 package com.mx.cbtis.gestor.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Proyectos {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id_proyecto;
 	private String nombre;
 	private String descripcion;
+	@jakarta.persistence.Convert(converter = com.mx.cbtis.gestor.persistence.FechaConverter.class)
 	private String fecha_inicio;
+	@jakarta.persistence.Convert(converter = com.mx.cbtis.gestor.persistence.FechaConverter.class)
 	private String fecha_finalizacion;
 	private String estado_proyecto;
 	private String fondo;
-	
+
 	public Proyectos() {
 		super();
 	}

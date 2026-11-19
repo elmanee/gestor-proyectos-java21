@@ -28,20 +28,23 @@ import com.mx.cbtis.modelo.Proyectos;
 import com.mx.cbtis.modelo.Tareas;
 import com.mx.cbtis.modelo.Usuario;
 
-@SpringBootTest
 public class GestorControllerTest {
 
-    @Autowired
     private GestorController controller;
 
     private MockRestServiceServer mockServer;
 
+    @org.junit.jupiter.api.AfterEach void verifyRequests() { mockServer.verify(); }
+
     @BeforeEach
     public void setUp() {
-        // Al crear RestTemplate dentro del controlador de forma manual,
-        // vinculamos MockRestServiceServer a una nueva instancia para interceptar peticiones.
+        // Adapted from the teacher repository (cfce465): bind the SAME HTTP client
+        // injected into the controller, so tests never call a real API.
         RestTemplate restTemplate = new RestTemplate();
         mockServer = MockRestServiceServer.createServer(restTemplate);
+        var builder = org.mockito.Mockito.mock(org.springframework.boot.web.client.RestTemplateBuilder.class);
+        org.mockito.Mockito.when(builder.build()).thenReturn(restTemplate);
+        controller = new GestorController(builder, "http://localhost:8081");
     }
 
     @Test
@@ -233,10 +236,8 @@ public class GestorControllerTest {
     @Test
     public void testGetTarea() {
         Model model = new ConcurrentModel();
-        String viewName = controller.getTarea(model);
-
-        assertEquals("proyecto", viewName);
-        assertNotNull(model.getAttribute("tareas"));
+        String viewName = controller.getTarea(null);
+        assertEquals("redirect:/inicio", viewName);
     }
 
     @Test
@@ -262,8 +263,9 @@ public class GestorControllerTest {
                   .andExpect(method(HttpMethod.POST))
                   .andRespond(withSuccess("1", MediaType.APPLICATION_JSON));
 
-        String viewName = controller.setSaveComentario(comentario);
-        assertEquals("proyecto", viewName);
+        comentario.setTexto_comentario("Comentario de prueba");
+        var response = controller.setSaveComentario(comentario);
+        assertEquals(1, response.getBody());
     }
 
     @Test

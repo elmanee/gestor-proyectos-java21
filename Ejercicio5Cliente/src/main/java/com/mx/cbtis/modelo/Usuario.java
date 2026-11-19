@@ -1,14 +1,14 @@
 package com.mx.cbtis.modelo;
 
 public class Usuario {
-	
+
 	private Integer id_usuario;
 	private String nombre;
 	private String correo_electronico;
 	private String contrasena;
 	private String rol;
 	private String imagen_usuario;
-	
+
 	public Usuario() {
 		super();
 	}

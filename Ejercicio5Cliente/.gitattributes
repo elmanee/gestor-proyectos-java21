@@ -1,0 +1,9 @@
+*.pdf binary
+*.mp4 binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.zip binary
+mvnw text eol=lf
+Jenkinsfile text eol=lf
+*.groovy text eol=lf

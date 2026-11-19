@@ -1,0 +1,16 @@
+{
+  "name": "gestor-cliente-pruebas",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "c8 --all --include=src/main/resources/static/js/inicio.js --include=src/main/resources/static/js/proyecto.js --include=src/main/resources/static/js/login.js --include=src/main/resources/static/js/register.js --include=src/main/resources/static/js/pplmproyecto.js --reporter=lcov --reporter=text node --test tests/*.test.cjs"
+  },
+  "devDependencies": {
+    "c8": "12.0.0",
+    "jsdom": "27.2.0"
+  },
+  "overrides": {
+    "minimatch": "11.0.9",
+    "glob": "14.0.6"
+  }
+}

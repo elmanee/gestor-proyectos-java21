@@ -10,7 +10,13 @@ pipeline {
         stage('Checkout') { steps { checkout scm } }
         stage('Java 21 y Maven') { steps { sh 'java -version; mvn -version' } }
         stage('Pruebas y cobertura') { steps { dir('Ejercicio5Cliente') { sh 'mvn -B -ntp clean verify' } } }
-        stage('Vulnerabilidades sin target') { steps { dir('Ejercicio5Cliente') { sh '/var/jenkins_home/tools/trivy/trivy fs --quiet --scanners vuln,secret,misconfig --skip-dirs target,.git,.idea,entrega,evidencias,tmp,.secrets --format json --output trivy-frontend.json .'; sh '/var/jenkins_home/tools/trivy/trivy sbom --quiet --format json --output trivy-dependencies.json ci-reports/bom.json' } } }
+        stage('Pruebas JavaScript') { steps { dir('Ejercicio5Cliente') {
+            withEnv(['PATH+NODE=/var/jenkins_home/tools/node/bin']) {
+                sh 'npm ci --ignore-scripts --no-audit --no-fund'
+                sh 'npm test'
+            }
+        } } }
+        stage('Vulnerabilidades sin target') { steps { dir('Ejercicio5Cliente') { sh '/var/jenkins_home/tools/trivy/trivy fs --quiet --scanners vuln,secret,misconfig --skip-dirs node_modules,coverage,target,.git,.idea,entrega,evidencias,tmp,.secrets --format json --output trivy-frontend.json .'; sh '/var/jenkins_home/tools/trivy/trivy sbom --quiet --format json --output trivy-dependencies.json ci-reports/bom.json' } } }
         stage('SonarQube') { steps { dir('Ejercicio5Cliente') {
             withCredentials([string(credentialsId: 'gestor-sonar-token', variable: 'SONAR_TOKEN')]) {
                 sh 'mvn -B -ntp sonar:sonar -Dsonar.nodejs.executable=/var/jenkins_home/tools/node/bin/node -Dsonar.projectKey=gestor-frontend -Dsonar.projectName=Gestor-frontend -Dsonar.qualitygate.wait=true'
@@ -19,6 +25,7 @@ pipeline {
     }
     post { always {
         junit testResults: 'Ejercicio5Cliente/target/surefire-reports/*.xml', allowEmptyResults: true
-        archiveArtifacts artifacts: 'Ejercicio5Cliente/target/site/jacoco/**,Ejercicio5Cliente/ci-reports/bom.json,Ejercicio5Cliente/trivy-*.json,Ejercicio5Cliente/target/failsafe-reports/*', allowEmptyArchive: true
+        archiveArtifacts artifacts: 'Ejercicio5Cliente/target/site/jacoco/**,Ejercicio5Cliente/coverage/**,Ejercicio5Cliente/ci-reports/bom.json,Ejercicio5Cliente/trivy-*.json,Ejercicio5Cliente/target/failsafe-reports/*', allowEmptyArchive: true
     } }
 }
+

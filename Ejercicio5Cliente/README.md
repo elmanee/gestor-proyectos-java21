@@ -14,3 +14,7 @@ El `Jenkinsfile` ejecuta compilación, pruebas, JaCoCo, Trivy y SonarQube. El di
 El reporte JaCoCo se genera en `target/site/jacoco/index.html`; `verify` exige 100% de cobertura de métodos. Solo se excluye la clase de arranque `*Application` de la medición de cobertura; no se excluye código funcional. Los DTO y controladores sí se miden.
 
 La entrega y sus evidencias se encuentran en `entrega/`.
+
+## Pruebas del JavaScript propio
+
+Con Node 22: `npm ci --ignore-scripts` y `npm test`. Los 11 casos cubren formularios, listas, comentarios, texto HTML escapado, errores de API y sesi�n. c8 genera `coverage/lcov.info` para SonarQube. La ejecuci�n de Jenkins incluye estas pruebas.

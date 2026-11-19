@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') { steps { checkout scm } }
         stage('Java 21 y Maven') { steps { sh 'java -version; mvn -version' } }
         stage('Pruebas y cobertura') { steps { dir('Ejercicio5MyAPIGestor') { sh 'mvn -B -ntp clean verify' } } }
-        stage('Vulnerabilidades sin target') { steps { dir('Ejercicio5MyAPIGestor') { sh '/var/jenkins_home/tools/trivy/trivy fs --quiet --scanners vuln,secret,misconfig --skip-dirs target,.git,.idea,entrega,evidencias,tmp,.secrets --format json --output trivy-backend.json .'; sh '/var/jenkins_home/tools/trivy/trivy sbom --quiet --format json --output trivy-dependencies.json ci-reports/bom.json' } } }
+        stage('Vulnerabilidades sin target') { steps { dir('Ejercicio5MyAPIGestor') { sh '/var/jenkins_home/tools/trivy/trivy fs --quiet --scanners vuln,secret,misconfig --skip-dirs node_modules,coverage,target,.git,.idea,entrega,evidencias,tmp,.secrets --format json --output trivy-backend.json .'; sh '/var/jenkins_home/tools/trivy/trivy sbom --quiet --format json --output trivy-dependencies.json ci-reports/bom.json' } } }
         stage('SonarQube') { steps { dir('Ejercicio5MyAPIGestor') {
             withCredentials([string(credentialsId: 'gestor-sonar-token', variable: 'SONAR_TOKEN')]) {
                 sh 'mvn -B -ntp sonar:sonar -Dsonar.nodejs.executable=/var/jenkins_home/tools/node/bin/node -Dsonar.projectKey=gestor-backend -Dsonar.projectName=Gestor-backend -Dsonar.qualitygate.wait=true'

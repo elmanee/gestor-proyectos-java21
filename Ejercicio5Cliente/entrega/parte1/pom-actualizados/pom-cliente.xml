@@ -20,6 +20,7 @@
         <tomcat.version>10.1.59</tomcat.version>
         <log4j2.version>2.25.5</log4j2.version>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.javascript.lcov.reportPaths>coverage/lcov.info</sonar.javascript.lcov.reportPaths>
         <sonar.sources>src/main</sonar.sources>
         <sonar.exclusions>**/target/**,**/evidencias/**,**/entrega/**,**/tmp/**,**/static/js/jquery*,**/static/js/bootstrap*,**/static/js/popper*,**/static/css/bootstrap*</sonar.exclusions>
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>

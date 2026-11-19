@@ -9,3 +9,6 @@ tmp/
 application-local.properties
 ci-reports/
 /trivy-*.json
+
+node_modules/
+coverage/

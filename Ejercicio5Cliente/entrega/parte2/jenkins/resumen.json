@@ -1,0 +1,41 @@
+{
+  "gestor-frontend": {
+    "build": 3,
+    "result": "SUCCESS",
+    "url": "http://localhost:8080/job/gestor-frontend/3/",
+    "duration": 195772,
+    "timestamp": 1795120049029,
+    "gitCommit": "86add0c4f2a1f6400f68f58024c3a4454c9a3445",
+    "tests": [
+      "Tests run: 1, Failures: 0, Errors: 0, Skipped: 0",
+      "Tests run: 20, Failures: 0, Errors: 0, Skipped: 0",
+      "Tests run: 52, Failures: 0, Errors: 0, Skipped: 0"
+    ]
+  },
+  "gestor-backend": {
+    "build": 2,
+    "result": "SUCCESS",
+    "url": "http://localhost:8080/job/gestor-backend/2/",
+    "duration": 155008,
+    "timestamp": 1795110114423,
+    "gitCommit": "8c58f7f1b92163b2f000e5b807fe8e2c69e73a72",
+    "tests": [
+      "Tests run: 1, Failures: 0, Errors: 0, Skipped: 0",
+      "Tests run: 2, Failures: 0, Errors: 0, Skipped: 0",
+      "Tests run: 16, Failures: 0, Errors: 0, Skipped: 0"
+    ]
+  },
+  "gestor-database": {
+    "build": 2,
+    "result": "SUCCESS",
+    "url": "http://localhost:8080/job/gestor-database/2/",
+    "duration": 270046,
+    "timestamp": 1795110123449,
+    "gitCommit": "8c58f7f1b92163b2f000e5b807fe8e2c69e73a72",
+    "tests": [
+      "Tests run: 16, Failures: 0, Errors: 0, Skipped: 0",
+      "Tests run: 1, Failures: 0, Errors: 0, Skipped: 0",
+      "Tests run: 1, Failures: 0, Errors: 0, Skipped: 0"
+    ]
+  }
+}

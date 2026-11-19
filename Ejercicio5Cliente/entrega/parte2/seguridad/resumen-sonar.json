@@ -1,0 +1,17 @@
+{
+  "gestor-frontend": {
+    "issues": 183,
+    "measures": null,
+    "qualityGate": "OK"
+  },
+  "gestor-backend": {
+    "issues": 111,
+    "measures": null,
+    "qualityGate": "OK"
+  },
+  "gestor-database": {
+    "issues": 3,
+    "measures": null,
+    "qualityGate": "OK"
+  }
+}

@@ -7,19 +7,19 @@ $(document).ready(function() {
 	document.getElementById("etiqueta").selectedIndex = "0";
 
 	
-	var usuarioString = localStorage.getItem("usuario");
-	var usuario = JSON.parse(usuarioString);
+	let usuarioString = localStorage.getItem("usuario");
+	let usuario = JSON.parse(usuarioString);
 	if (!usuario) { window.location.replace("/login"); return; }
-	var imagen = document.getElementById("imagenUsuario");
+	let imagen = document.getElementById("imagenUsuario");
 	imagen.style.backgroundColor = usuario.imagen_usuario;
-	var inicial = usuario.nombre[0];
+	let inicial = usuario.nombre[0];
 	document.getElementById("Nombre").textContent = usuario.nombre;
 	document.getElementById("Email").textContent = usuario.correo_electronico;
 	document.getElementById("inicial").textContent = inicial;
 	
-	var urlParams = new URLSearchParams(window.location.search);
-	var id = urlParams.get('id_proyecto');
-	var id_proyecto = Number(id);
+	let urlParams = new URLSearchParams(window.location.search);
+	let id = urlParams.get('id_proyecto');
+	let id_proyecto = Number(id);
 	console.log(id_proyecto);
 	document.getElementById("IdProyectoURL").value = id_proyecto;
 	
@@ -31,11 +31,11 @@ $(document).ready(function() {
 	        dataType: 'json',
 	    	contentType: 'application/json',
 	        success: function(data){
-				var contenedor = $('#miembrosLateral');
+				let contenedor = $('#miembrosLateral');
 	            contenedor.empty();
 	            
 	             data.forEach(function(usuario) {
-					var miembro = `
+					let miembro = `
 		            <p>${escapeHtml(usuario.nombre)}</p>
 	            	`;
 	             contenedor.append(miembro);})
@@ -52,26 +52,28 @@ $(document).ready(function() {
         dataType: 'json',
     	contentType: 'application/json',
         success: function(data){
-			var contenedor = $('#tareasPendientes');
+			let contenedor = $('#tareasPendientes');
             contenedor.empty();
-            var contenedor2 = $('#enCurso');
+            let contenedor2 = $('#enCurso');
             contenedor2.empty();
-            var contenedor3 = $('#trabajoTerminado');
+            let contenedor3 = $('#trabajoTerminado');
             contenedor3.empty();
             
-            var contenedorLateral1 = $('#dropdownPendientes');
+            let contenedorLateral1 = $('#dropdownPendientes');
             contenedorLateral1.empty();
-            var contenedorLateral2 = $('#dropdownEnCurso');
+            let contenedorLateral2 = $('#dropdownEnCurso');
             contenedorLateral2.empty();
-            var contenedorLateral3 = $('#dropdownTerminado');
+            let contenedorLateral3 = $('#dropdownTerminado');
             contenedorLateral3.empty();
             
             // Crear tarjetas para cada proyecto
 
           data.forEach(function(tarea) {
             tarea = {...tarea, nombre: escapeHtml(tarea.nombre)};
+            let tarjeta = "", tarjeta2 = "", tarjeta3 = "";
+            let lateral1 = "", lateral2 = "", lateral3 = "";
 			if(tarea.lista == "pendientes"){
-				var tarjeta = `
+				tarjeta = `
 	            <ul class="my-2">
 	              <li>
 					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
@@ -85,7 +87,7 @@ $(document).ready(function() {
 				</ul>
             	`;
             	
-            	var lateral1 = `
+            	lateral1 = `
 	            	<button type="button" class="btn btn-light text-start d-grid gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
             	`;
             	
@@ -99,11 +101,11 @@ $(document).ready(function() {
 	        		dataType: 'json',
 	    			contentType: 'application/json',
 			        success: function(data){
-						var contenedorComentario = $('#contenedorComentario');
+						let contenedorComentario = $('#contenedorComentario');
 			            contenedorComentario.empty();
 			            
 			            data.forEach(function(comentarios) {
-								var comentario = `
+								let comentario = `
 								<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
 								    <strong class="me-auto">Liliana Gómez Martínez</strong>
 								    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
@@ -119,7 +121,7 @@ $(document).ready(function() {
 			}
 			
 			if(tarea.lista == "encurso"){
-				var tarjeta2 = `
+				tarjeta2 = `
 	            <ul class="my-2">
 	              <li>
 					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
@@ -133,7 +135,7 @@ $(document).ready(function() {
 				</ul>
             	`;
             	
-            	var lateral2 = `
+            	lateral2 = `
 	            	<button type="button" class="btn btn-light text-start d-grid gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
             	`;
             	
@@ -145,11 +147,11 @@ $(document).ready(function() {
 	        		dataType: 'json',
 	    			contentType: 'application/json',
 			        success: function(data){
-						var contenedorComentario = $('#contenedorComentario');
+						let contenedorComentario = $('#contenedorComentario');
 			            contenedorComentario.empty();
 			            
 			            data.forEach(function(comentarios) {
-								var comentario = `
+								let comentario = `
 								<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
 								    <strong class="me-auto">Liliana Gómez Martínez</strong>
 								    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
@@ -164,7 +166,7 @@ $(document).ready(function() {
 			       });*/
 			}
            if(tarea.lista == "terminado"){
-			   var tarjeta3 = `
+			   tarjeta3 = `
 	            <ul class="my-2">
 	              <li>
 					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
@@ -178,7 +180,7 @@ $(document).ready(function() {
 				</ul>
 	            `;
 	            
-	            var lateral3 = `
+	            lateral3 = `
 	            	<button type="button" class="btn btn-light text-start d-grid gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
             	`;
 	            
@@ -190,11 +192,11 @@ $(document).ready(function() {
 	        		dataType: 'json',
 	    			contentType: 'application/json',
 			        success: function(data){
-						var contenedorComentario = $('#contenedorComentario');
+						let contenedorComentario = $('#contenedorComentario');
 			            contenedorComentario.empty();
 			            
 			            data.forEach(function(comentarios) {
-								var comentario = `
+								let comentario = `
 								<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
 								    <strong class="me-auto">Liliana Gómez Martínez</strong>
 								    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
@@ -227,10 +229,10 @@ $(document).ready(function() {
 });
 
 function newTarea(){
-	var inputTarea = document.getElementById("inputTarea");
-	var displayStyle = window.getComputedStyle(inputTarea).display;
-	var btnTarea = document.getElementById("btnTarea");
-	var displayStyle2 = window.getComputedStyle(btnTarea).display;
+	let inputTarea = document.getElementById("inputTarea");
+	let displayStyle = window.getComputedStyle(inputTarea).display;
+	let btnTarea = document.getElementById("btnTarea");
+	let displayStyle2 = window.getComputedStyle(btnTarea).display;
 	
 	if(displayStyle === "none" & displayStyle2 === "none"){
 		inputTarea.style.display = "block";
@@ -243,10 +245,10 @@ function newTarea(){
 	}
 }
 function newTarea2(){
-	var inputTarea2 = document.getElementById("inputTarea2");
-	var displayStyle = window.getComputedStyle(inputTarea2).display;
-	var btnTarea2 = document.getElementById("btnTarea2");
-	var displayStyle2 = window.getComputedStyle(btnTarea2).display;
+	let inputTarea2 = document.getElementById("inputTarea2");
+	let displayStyle = window.getComputedStyle(inputTarea2).display;
+	let btnTarea2 = document.getElementById("btnTarea2");
+	let displayStyle2 = window.getComputedStyle(btnTarea2).display;
 	
 	if(displayStyle === "none" & displayStyle2 === "none"){
 		inputTarea2.style.display = "block";
@@ -259,10 +261,10 @@ function newTarea2(){
 	}
 }
 function newTarea3(){
-	var inputTarea3 = document.getElementById("inputTarea3");
-	var displayStyle = window.getComputedStyle(inputTarea3).display;
-	var btnTarea3 = document.getElementById("btnTarea3");
-	var displayStyle2 = window.getComputedStyle(btnTarea3).display;
+	let inputTarea3 = document.getElementById("inputTarea3");
+	let displayStyle = window.getComputedStyle(inputTarea3).display;
+	let btnTarea3 = document.getElementById("btnTarea3");
+	let displayStyle2 = window.getComputedStyle(btnTarea3).display;
 	
 	if(displayStyle === "none" & displayStyle2 === "none"){
 		inputTarea3.style.display = "block";
@@ -276,8 +278,8 @@ function newTarea3(){
 }
 
 function Fechas(){
-	var inputFechas = document.getElementById("inputFechas");
-	var displayStyle = window.getComputedStyle(inputFechas).display;
+	let inputFechas = document.getElementById("inputFechas");
+	let displayStyle = window.getComputedStyle(inputFechas).display;
 	
 	if(displayStyle === "none"){
 		inputFechas.style.display = "block";
@@ -291,9 +293,9 @@ function Fechas(){
 function validarTarea(){
     if (!$("#inputTarea").val().trim()) { $("#inputTarea").get(0).focus(); return; }
 	
-	var urlParams = new URLSearchParams(window.location.search);
-	var id = urlParams.get('id_proyecto');
-	var id_proyecto = Number(id);
+	let urlParams = new URLSearchParams(window.location.search);
+	let id = urlParams.get('id_proyecto');
+	let id_proyecto = Number(id);
 	console.log(id_proyecto);
 
 	$.ajax({
@@ -303,8 +305,8 @@ function validarTarea(){
 		type : "POST",
 		success: function(data){
 			console.log(data);
-            var id = document.getElementById("IdProyectoURL").value;
-			var url = `proyecto?id_proyecto=${id}`;
+            let id = document.getElementById("IdProyectoURL").value;
+			let url = `proyecto?id_proyecto=${id}`;
             window.location.href= url;}
 	})
 }
@@ -312,9 +314,9 @@ function validarTarea(){
 function validarTarea2(){
     if (!$("#inputTarea2").val().trim()) { $("#inputTarea2").get(0).focus(); return; }
 	
-	var urlParams = new URLSearchParams(window.location.search);
-	var id = urlParams.get('id_proyecto');
-	var id_proyecto = Number(id);
+	let urlParams = new URLSearchParams(window.location.search);
+	let id = urlParams.get('id_proyecto');
+	let id_proyecto = Number(id);
 	console.log(id_proyecto);
 	
 	$.ajax({
@@ -324,17 +326,17 @@ function validarTarea2(){
 		type : "POST",
 		success: function(data){
 			console.log(data);
-            var id = document.getElementById("IdProyectoURL").value;
-			var url = `proyecto?id_proyecto=${id}`;
+            let id = document.getElementById("IdProyectoURL").value;
+			let url = `proyecto?id_proyecto=${id}`;
             window.location.href= url;}
 	})
 }
 function validarTarea3(){
     if (!$("#inputTarea3").val().trim()) { $("#inputTarea3").get(0).focus(); return; }
 	
-	var urlParams = new URLSearchParams(window.location.search);
-	var id = urlParams.get('id_proyecto');
-	var id_proyecto = Number(id);
+	let urlParams = new URLSearchParams(window.location.search);
+	let id = urlParams.get('id_proyecto');
+	let id_proyecto = Number(id);
 	console.log(id_proyecto);
 	
 	console.log(id);
@@ -346,8 +348,8 @@ function validarTarea3(){
 		type : "POST",
 		success: function(data){
 			console.log(data);
-            var id = document.getElementById("IdProyectoURL").value;
-			var url = `proyecto?id_proyecto=${id}`;
+            let id = document.getElementById("IdProyectoURL").value;
+			let url = `proyecto?id_proyecto=${id}`;
             window.location.href= url;}
 	})
 }
@@ -360,8 +362,8 @@ function eliminarTarea(id_tarea){
 		data : JSON.stringify({id_tarea:id_tarea}),
 		type : "POST",
 		success: function(){
-			var id = document.getElementById("IdProyectoURL").value;
-			var url = `proyecto?id_proyecto=${id}`;
+			let id = document.getElementById("IdProyectoURL").value;
+			let url = `proyecto?id_proyecto=${id}`;
             window.location.href= url;}
 	});
 }
@@ -376,7 +378,7 @@ function actualizarTarea(id_tarea){
 	console.log(fecha);
 	
 	document.getElementById("descripcionT").value = "_";
-	var fechas = document.getElementById('inputFechas');
+	let fechas = document.getElementById('inputFechas');
 	fechas.value = fecha;
 	
 	document.getElementById("etiqueta").value = "primary";
@@ -393,7 +395,7 @@ function actualizarTarea(id_tarea){
 		success: function(data){
 			$('#editarTarea').modal('show');
 			
-			var modal = $('#editarTarea');
+			let modal = $('#editarTarea');
 			modal.find('.modal-title').text(data.nombre);
 			
 			document.getElementById("id_tarea").value = data.id_tarea;
@@ -417,14 +419,14 @@ function verificarComentario(){
 		type : "POST",
 		success: function(data){
 			console.log(data);
-			var id = document.getElementById("IdProyectoURL").value;
-			var url = `proyecto?id_proyecto=${id}`;
+			let id = document.getElementById("IdProyectoURL").value;
+			let url = `proyecto?id_proyecto=${id}`;
             window.location.href= url;}
 	})
 }*/
 
 function guardarComentario(){
-	var comentario = $('#comentarioT').val().trim();
+	let comentario = $('#comentarioT').val().trim();
     if (!comentario) { $('#comentarioT').get(0).focus(); return; }
 	let now = new Date();
 	let day = ('0' + now.getDate()).slice(-2);        // Día del mes (dos dígitos)
@@ -434,8 +436,8 @@ function guardarComentario(){
 	let minute = ('0' + now.getMinutes()).slice(-2);   // Minutos (dos dígitos)
 	let fecha = `${year}-${month}-${day} ${hour}:${minute}:00`;
 	
-	var usuarioString = localStorage.getItem("usuario");
-	var usuario = JSON.parse(usuarioString);
+	let usuarioString = localStorage.getItem("usuario");
+	let usuario = JSON.parse(usuarioString);
 	
 	$.ajax({
             url: '/saveComentario',
@@ -452,8 +454,8 @@ function guardarComentario(){
                 // Manejar la respuesta del servidor según sea necesario
                 console.log('Comentario guardado exitosamente');
                 // Puedes actualizar la UI si es necesario
-                var id = document.getElementById("IdProyectoURL").value;
-				var url = `proyecto?id_proyecto=${id}`;
+                let id = document.getElementById("IdProyectoURL").value;
+				let url = `proyecto?id_proyecto=${id}`;
 	            window.location.href= url;
             },
             error: function(error) {
@@ -475,10 +477,10 @@ function llenarBarraLateral(idProyecto){
 		success: function(data){
 			console.log(data);
 			
-			var nombre = document.getElementById("offcanvasScrollingLabel");
+			let nombre = document.getElementById("offcanvasScrollingLabel");
 			nombre.textContent = data.nombre;
 			
-			var descripcion = document.getElementById("despliegueDescripcion");
+			let descripcion = document.getElementById("despliegueDescripcion");
 			descripcion.textContent = data.descripcion;
 		
 		},
@@ -498,11 +500,11 @@ function comentarios(idTarea){
 		dataType: 'json',
 		contentType: 'application/json',
 	    success: function(data){
-			var contenedorComentario = $('#contenedorComentario');
+			let contenedorComentario = $('#contenedorComentario');
 	        contenedorComentario.empty();
 	        
 	        data.forEach(function(comentarios) {
-					var comentario = `
+					let comentario = `
 					<div class="text-start bg-secondary p-2 bg-opacity-50 mb-3 rounded">
 					    <strong class="me-auto">${escapeHtml(comentarios.id_usuario)}</strong>
 					    <small class="text-body-secondary">${escapeHtml(comentarios.fecha_hora)}</small>
@@ -522,13 +524,13 @@ function IrInicio(){
 }
 
 function obtenerInfo(datos, objetivo, nombre) {
-	var nuevoTexto = "¿Esta seguro que sea eliminar la tarea " + nombre + "?";
+	let nuevoTexto = "¿Esta seguro que sea eliminar la tarea " + nombre + "?";
 	document.getElementById("textAlerta").innerText = nuevoTexto;
     $(`#${objetivo}`).val(datos);
 }
 
 function botonEliminar(){
 	
-	var id = document.getElementById("hiddenId").value;
+	let id = document.getElementById("hiddenId").value;
 	eliminarTarea(id);
 }

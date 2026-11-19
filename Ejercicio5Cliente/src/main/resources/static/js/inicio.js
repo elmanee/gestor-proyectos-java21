@@ -9,13 +9,13 @@ $(document).ready(function(){
         dataType: 'json',
         success: function(data) {
 
-          var contenedor = $('#cardContainer');
+          let contenedor = $('#cardContainer');
           contenedor.empty();
 
           // Crear tarjetas para cada proyecto
           data.forEach(function(proyecto) {
             proyecto = {...proyecto, nombre: escapeHtml(proyecto.nombre), descripcion: escapeHtml(proyecto.descripcion), fecha_inicio: escapeHtml(proyecto.fecha_inicio), fecha_finalizacion: escapeHtml(proyecto.fecha_finalizacion), estado_proyecto: escapeHtml(proyecto.estado_proyecto)};
-            var tarjeta = `
+            let tarjeta = `
               <div class="col-md-4">
                 <div class="card mb-4">
                   <img src="${/^\/Images\/[A-Za-z0-9]+\.(png|gif|jpg)$/.test(proyecto.fondo) ? proyecto.fondo : '/Images/blanco.png'}" alt="...">
@@ -81,14 +81,14 @@ function eliminarProyecto(idProyecto){
 }
 
 function obtenerInfo(datos, objetivo, nombre) {
-	var nuevoTexto = "¿Esta seguro que sea eliminar el proyecto " + nombre + "?";
+	let nuevoTexto = "¿Esta seguro que sea eliminar el proyecto " + nombre + "?";
 	document.getElementById("textAlerta").innerText = nuevoTexto;
     $(`#${objetivo}`).val(datos);
 }
 
 function botonEliminar(){
 	
-	var id = document.getElementById("hiddenId").value;
+	let id = document.getElementById("hiddenId").value;
 	eliminarProyecto(id);
 }
 
@@ -102,7 +102,7 @@ function actualizarProyecto(idProyecto){
 		success: function(data){
 			$('#modalEditar').modal('show');
 			
-			var modal = $('#modalEditar');
+			let modal = $('#modalEditar');
 			modal.find('.modal-title').text('Editar')
 				
 			document.getElementById("id").value = data.id_proyecto;
